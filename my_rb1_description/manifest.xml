@@ -1,0 +1,15 @@
+<package>
+  <description brief="my_rb1_description">
+
+     my_rb1_description
+
+  </description>
+  <author>user</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/my_rb1_description</url>
+  <depend package="rospy"/>
+  <depend package="urdf"/>
+  <depend package="xacro"/>
+
+</package>

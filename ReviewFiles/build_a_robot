@@ -1,0 +1,44 @@
+<!-- Joint - chassis / left wheel -->
+<joint name="joint_chassis_left_wheel" type="continuous">
+    <origin rpy="0 0 0" xyz="-0.5 0.65 0" />
+    <child link="link_left_wheel" />
+    <parent link="link_chassis" />
+    <axis rpy="0 0 0" xyz="0 1 0" />
+    <limit effort="10000" velocity="1000" />
+    <joint_properties damping="1.0" friction="1.0" />
+</joint>
+
+<!-- Link - left wheel -->
+<link name="link_left_wheel">
+    <inertial>
+        <mass value="1" />
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <inertia ixx="0.002526666666667" ixy="0" ixz="0" iyy="0.002526666666667" iyz="0" izz="0.005"/>
+    </inertial>
+
+    <collision>
+        <origin rpy="1.5707 0 0" xyz="0 0.18 0" />
+        <geometry>
+            <cylinder length="0.12" radius="0.4"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin rpy="1.5707 0 0" xyz="0 0.18 0" />
+        <geometry>
+            <cylinder length="0.12" radius="0.4"/>
+        </geometry>
+    </visual>
+
+    <collision>
+        <origin rpy="1.5707 0 0" xyz="0 0.06 0" />
+        <geometry>
+            <cylinder length="0.12" radius="0.08"/>
+        </geometry>
+    </collision>
+    <visual>
+        <origin rpy="1.5707 0 0" xyz="0 0.06 0" />
+        <geometry>
+            <cylinder length="0.12" radius="0.08"/>
+        </geometry>
+    </visual>
+</link>
