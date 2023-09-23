@@ -1,0 +1,120 @@
+<?xml version="1.0" ?>
+
+
+<robot name="my_rb1_robot">
+
+    <-- Link - chassis -->
+    <link name="base_link>
+
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <mass value="25"/>
+            <inertia ixx="100" ixy="0" ixz="0" iyy="100" iyz="0" izz="100"/>
+        </inertial>
+ 
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length=".30" radius=".25"/>
+            </geometry>
+            <material name="Cyan">
+                <color rgba=0 1 0 1"/>
+            </material>
+        </visual>
+
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius=".25" length =".30"/>
+            </geometry>
+        </collision>
+    </link>
+        
+    <!-- Link-right_wheel -->
+    <link name="link_right_wheel>
+        <inertial>
+            <origin xyz="0 -.2 -.15"/>
+            <inertia ixx=".0025" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz=".005"/>
+        </inertial>
+
+        <collision>
+            <origin xyz="0 -.2 -.15" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.025" radius=".025"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 -.2 -.15" rpy"0 0 0"/>
+            <geometry>
+                <cylinder length=".025" radius=".025/>
+            <geometry>
+        </visual>
+    </link>
+    
+    <!-- Link-left_wheel -->
+    <link name="left_wheel>
+        <inertial>
+            <origin xyz="0 .2 -.15"/>
+            <inertia ixx=".0025" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz=".005"/>
+        </inertial>
+
+        <collision>
+            <origin xyz="0 .2 -.15" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0.025" radius=".025"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 .2 -.15" rpy"0 0 0"/>
+            <geometry>
+                <cylinder length=".025" radius=".025/>
+            <geometry>
+        </visual>
+    </link>
+
+    <!-- Link-front_caster -->
+    <link name="front_caster">
+        <collision>
+            <origin xyz="=-.1 0 -.15" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius=".025"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="-.1 0 -.15" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius=".025"/>
+            </geometry>
+            <material name="Grey">
+                <color rgba="0.6 0.6 0.6 1"/>
+            </material>
+        </visual>
+    
+    <!-- Link-back_caster -->
+    <link name="back_caster">
+        <collision>
+            <origin xyz=".1 0 -.15" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius=".025"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz=".1 0 -.15" rpy="0 0 0"/>
+            <geometry>
+                <sphere radius=".025"/>
+            </geometry>
+            <material name="Grey">
+                <color rgba="0.6 0.6 0.6 1"/>
+            </material>
+        </visual>
+    
+    <!-- Link-front_laser -->
+    <link name="front_laser>
+        <origin xyz=".25 0 .75" rpy="/>
+        <
+
+    </link>
