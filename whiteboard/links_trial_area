@@ -4,8 +4,7 @@
 <robot name="my_rb1_robot">
 
     <-- Link - chassis -->
-    <link name="base_link>
-
+    <link name="link_chassis">
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0"/>
             <mass value="25"/>
@@ -18,7 +17,7 @@
                 <cylinder length=".30" radius=".25"/>
             </geometry>
             <material name="Cyan">
-                <color rgba=0 1 0 1"/>
+                <color rgba="0 1 0 1"/>
             </material>
         </visual>
 
@@ -31,7 +30,7 @@
     </link>
         
     <!-- Link-right_wheel -->
-    <link name="link_right_wheel>
+    <link name="right_wheel">
         <inertial>
             <origin xyz="0 -.2 -.15"/>
             <inertia ixx=".0025" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz=".005"/>
@@ -47,13 +46,13 @@
         <visual>
             <origin xyz="0 -.2 -.15" rpy"0 0 0"/>
             <geometry>
-                <cylinder length=".025" radius=".025/>
+                <cylinder length=".025" radius=".025"/>
             <geometry>
         </visual>
     </link>
     
     <!-- Link-left_wheel -->
-    <link name="left_wheel>
+    <link name="left_wheel">
         <inertial>
             <origin xyz="0 .2 -.15"/>
             <inertia ixx=".0025" ixy="0" ixz="0" iyy="0.0025" iyz="0" izz=".005"/>
@@ -69,7 +68,7 @@
         <visual>
             <origin xyz="0 .2 -.15" rpy"0 0 0"/>
             <geometry>
-                <cylinder length=".025" radius=".025/>
+                <cylinder length=".025" radius=".025"/>
             <geometry>
         </visual>
     </link>
@@ -115,7 +114,7 @@
     </link>
 
     <!-- Link-front_laser -->
-    <link name="front_laser>
+    <link name="front_laser">
         <collision>
             <origin xyz=".25 0 .075" rpy="180/3.14159 0 0"/>
             <geometry>
@@ -136,16 +135,40 @@
 
     <!-- Joint - chassis/right wheel -->
     <joint name="joint_chassis_right_wheel" type="continuous">
+        <origin rpy="0 0 0" xyz="-0.5 -0.65 0" />
+        <child link="link_right_wheel" />
+        <parent link="link_chassis" />
+        <axis rpy="0 0 0" xyz="0 1 0" />
+        <limit effort="10000" velocity="1000" />
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>
 
     <!-- Joint - chassis/left wheel -->
     <joint name="joint_chassis_left_wheel" type="continuous">
+        <origin rpy="0 0 0" xyz="-0.5 0.65 0" />
+        <child link="left_wheel" />
+        <parent link="link_chassis" />
+        <axis rpy="0 0 0" xyz="0 1 0" />
+        <limit effort="10000" velocity="1000" />
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>
 
     <!-- Joint - chassis/front_caster -->
     <joint name="joint_chassis_front_caster" type="fixed">
-        <origin xyz="
+        <origin rpy="0 0 0" xyz="0.8 0 -0.15" />
+        <child link="front_caster" />
+        <parent link="link_chassis" />
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>
+
 
     <!-- Joint - chassis/back_caster -->
     <joint name="joint_chassis_back_caster" type="fixed"/>
+        <origin rpy="0 0 0" xyz="0.8 0 -0.15" />
+        <child link="back_caster" />
+        <parent link="link_chassis" />
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>
 
     <!-- Joint - chassis/front_laser -->
     <joint name="joint_chassis_front_laser" type="fixed"/>
