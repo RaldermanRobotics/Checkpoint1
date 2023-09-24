@@ -3,6 +3,41 @@
 
 <robot name="my_rb1_robot">
 
+    <!-- Link - base_frame-->
+    <link name="base_frame">
+        <inertial>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <mass value="0"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+        </inertial>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0" length ="0"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder length="0" radius="0"/>
+            </geometry>
+            <material name="Cyan">
+                <color rgba="0 0 1 .5"/>
+            </material>
+        </visual>
+    </link>
+
+    <!-- Joint base_frame to chassis-->
+    <joint name="joint_chassis_base_frame" type="fixed">
+        <origin rpy="0 0 0" xyz="0 0 -0.15" />
+        <child link="base_frame" />
+        <parent link="link_chassis" />
+        <axis rpy="0 0 0" xyz="0 0 0" />
+        <limit effort="10000" velocity="1000" />
+        <joint_properties damping="0" friction="0" />
+    </joint>        
+
     <!-- Link - chassis -->
     <link name="link_chassis">
         <inertial>
@@ -39,14 +74,14 @@
         <collision>
             <origin rpy="1.57 0 0" xyz="0 0 0" />
             <geometry>
-                <cylinder length="0.025" radius=".025"/>
+                <cylinder length="0.04" radius=".025"/>
             </geometry>
         </collision>
 
         <visual>
             <origin rpy="1.57 0 0" xyz="0 0 0" />
             <geometry>
-                <cylinder length=".025" radius=".025"/>
+                <cylinder length=".04" radius=".025"/>
             </geometry>
         </visual>
     </link>
@@ -72,14 +107,14 @@
         <collision>
             <origin rpy="1.57 0 0" xyz="0 0 0" />
             <geometry>
-                <cylinder length="0.025" radius=".025"/>
+                <cylinder length="0.04" radius=".025"/>
             </geometry>
         </collision>
 
         <visual>
             <origin rpy="1.57 0 0" xyz="0 0 0" />
             <geometry>
-                <cylinder length=".025" radius=".025"/>
+                <cylinder length=".04" radius=".025"/>
             </geometry>
         </visual>
     </link>
@@ -93,6 +128,59 @@
         <limit effort="10000" velocity="1000" />
         <joint_properties damping="1.0" friction="1.0" />
     </joint>
+
+
+
+
+<!-- Joint - caster wheel -->
+    <joint name="joint_chassis_front_caster_wheel" type="fixed">
+        <origin rpy="0 0 0" xyz="0.1 0 -0.15" />
+        <child link="front_caster_wheel" />
+        <parent link="link_chassis" />
+        <joint_properties damping="1.0" friction="0" />
+    </joint>
+    <!-- Link -front caster wheel -->
+    <link name="front_caster_wheel">
+        <inertial>
+            <mass value="1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.002526666666667" ixy="0" ixz="0" iyy="0.002526666666667" iyz="0" izz="0.005"/>
+        </inertial>
+
+        <!-- front caster wheel support -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0.03" />
+            <geometry>
+                <sphere radius="0.05" />
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0.03" />
+            <geometry>
+                <sphere radius="0.05" />
+            </geometry>
+            <material name="DarkBlue">
+                <color rgba="0.2 0.2 0.4 1" />
+            </material>
+        </visual>
+
+        <!-- Caster wheel -->
+        <collision>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <sphere radius="0.025" />
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0" />
+            <geometry>
+                <sphere radius="0.025" />
+            </geometry>
+            <material name="Grey">
+                <color rgba="0.6 0.6 0.6 1" />
+            </material>
+        </visual>
+    </link>
 
 
 </robot>
