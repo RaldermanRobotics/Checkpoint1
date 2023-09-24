@@ -23,7 +23,7 @@
                 <cylinder length="0.30" radius="0.25"/>
             </geometry>
             <material name="Cyan">
-                <color rgba="0 1 0 1"/>
+                <color rgba="0 1 0 .75"/>
             </material>
         </visual>
     </link>
@@ -31,25 +31,37 @@
         <!-- Link-left_wheel -->
     <link name="left_wheel">
         <inertial>
-            <origin rpy="0 0 0" xyz="0 0.2 -0.15" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <mass value="1"/>
             <inertia ixx=".25" ixy="0" ixz="0" iyy="0.25" iyz="0" izz=".5"/>
         </inertial>
 
         <collision>
-            <origin rpy="0 0 0" xyz="0 .2 -.15" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
                 <cylinder length="0.025" radius=".025"/>
             </geometry>
         </collision>
 
         <visual>
-            <origin rpy="0 0 0" xyz="0 .2 -.15" />
+            <origin rpy="0 0 0" xyz="0 0 0" />
             <geometry>
                 <cylinder length=".025" radius=".025"/>
             </geometry>
         </visual>
     </link>
+    
+    <!-- Joint - chassis / left wheel -->
+    <joint name="joint_chassis_left_wheel" type="continuous">
+        <origin rpy="0 0 0" xyz="0 0.2 -0.15" />
+        <child link="left_wheel" />
+        <parent link="link_chassis" />
+        <axis rpy="0 0 0" xyz="0 1 0" />
+        <limit effort="10000" velocity="1000" />
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>
+
+
 </robot>
 
 
