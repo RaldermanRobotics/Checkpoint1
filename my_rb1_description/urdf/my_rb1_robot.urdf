@@ -26,5 +26,4 @@
                 <cylinder radius=".25" length =".30"/>
             </geometry>
         </collision>
-        
     </link>

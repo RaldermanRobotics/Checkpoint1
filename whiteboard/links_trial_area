@@ -92,7 +92,8 @@
                 <color rgba="0.6 0.6 0.6 1"/>
             </material>
         </visual>
-    
+    </link>
+
     <!-- Link-back_caster -->
     <link name="back_caster">
         <collision>
@@ -111,10 +112,40 @@
                 <color rgba="0.6 0.6 0.6 1"/>
             </material>
         </visual>
-    
+    </link>
+
     <!-- Link-front_laser -->
     <link name="front_laser>
-        <origin xyz=".25 0 .75" rpy="/>
-        <
+        <collision>
+            <origin xyz=".25 0 .075" rpy="180/3.14159 0 0"/>
+            <geometry>
+                <sphere radius=".001"/>
+            </geometry>
+        </collison>
 
+        <visual>
+            <origin=".25 0 .075" rpy="180/3.14159 0 0"/>
+            <geometry>
+                <sphere radius=".001"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="1 0 0 1"/>
+            </material>
+        </visual>
     </link>
+
+    <!-- Joint - chassis/right wheel -->
+    <joint name="joint_chassis_right_wheel" type="continuous">
+
+    <!-- Joint - chassis/left wheel -->
+    <joint name="joint_chassis_left_wheel" type="continuous">
+
+    <!-- Joint - chassis/front_caster -->
+    <joint name="joint_chassis_front_caster" type="fixed">
+        <origin xyz="
+
+    <!-- Joint - chassis/back_caster -->
+    <joint name="joint_chassis_back_caster" type="fixed"/>
+
+    <!-- Joint - chassis/front_laser -->
+    <joint name="joint_chassis_front_laser" type="fixed"/>
