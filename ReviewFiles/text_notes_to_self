@@ -1,0 +1,19 @@
+Should work through section 3 of the gazebo course. The transmisison was a rough section for material
+
+will need to add inertia calculations.... i think it is the following
+M/2 * r^2 for the cylinder... not sure what i need more... maybe for each wheel too. 
+
+another caluculation of moment of inertia for a spoke and wheel
+I=I(of wheel)  + I(of spoke)
+I = MR^2 + (1/3)ML^2
+
+M=(mg)/g 
+
+L=r
+meaning that the spoke length is equal to the radius of the wheel.
+
+simpler moment of inertia calculations:
+for a cylinder I=(m/2)*R^2
+
+
+curious as to the type of joint for the caster wheels... used fixed in the module... weird to me.
