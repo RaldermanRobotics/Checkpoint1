@@ -1,7 +1,15 @@
 <?xml version="1.0"?>
 <launch>
-
-	<!-- roslaunch arguments --> 
+    <param name="robot_description" command="cat '$(find my_rb1_description)/urdf/my_rb1_robot.urdf'" />
+    
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0.5"/>
+    
+    <node name="mybot_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -param robot_description -model my_robot -x -.35 -y -1.35 -z $(arg z)"/>
+	
+    <!-- roslaunch arguments --> 
 	<arg name="debug" default="false"/>
 	<arg name="world_name" default="$(find rb1_base_gazebo)/worlds/ros2_online_workshop.world"/>
 
@@ -14,25 +22,5 @@
 		<arg name="headless" value="false"/>
 		<arg name="verbose" value="true"/>
 	</include>
-
-    <!-- Load the URDF model into Gazebo -->
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen">
-        <arg name="model" value="my_rb1_robot"/> <!-- Give your robot a name -->
-        <arg name="urdf" value="$(my_rb1_description)/urdf/my_rb1_robot.urdf"/>
-        <arg name="x" value="0"/> <!-- X position in the world -->
-        <arg name="y" value="0"/> <!-- Y position in the world -->
-        <arg name="z" value="0"/> <!-- Z position in the world -->
-        <arg name="R" value="0"/> <!-- Roll (rotation around the X-axis) -->
-        <arg name="P" value="0"/> <!-- Pitch (rotation around the Y-axis) -->
-        <arg name="Y" value="0"/> <!-- Yaw (rotation around the Z-axis) -->
-    </node>	
-
-      <!-- send fake joint values -->
-    <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
-
-    <!-- Combine joint values -->
-    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+	
 </launch>
-
-
-

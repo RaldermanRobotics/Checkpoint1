@@ -3,6 +3,22 @@
 
 <robot name="my_rb1_robot">
 
+    <gazebo reference="base_link">
+        <material>Gazebo/Black</material>
+    </gazebo>
+    <gazebo reference="front_caster">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+    <gazebo reference="back_caster">
+        <material>Gazebo/Orange</material>
+    </gazebo>
+    <gazebo reference="left_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+    <gazebo reference="right_wheel">
+        <material>Gazebo/Blue</material>
+    </gazebo>
+
     <!-- Link - base_frame-->
     <link name="base_footprint">
         <inertial>
