@@ -1,0 +1,12 @@
+<package>
+  <description brief="my_rb1_gazebo">
+
+     my_rb1_gazebo
+
+  </description>
+  <author>user</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/my_rb1_gazebo</url>
+
+</package>
