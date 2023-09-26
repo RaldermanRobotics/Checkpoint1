@@ -4,7 +4,7 @@
 <robot name="my_rb1_robot">
 
     <!-- Link - base_frame-->
-    <link name="base_frame">
+    <link name="base_footprint">
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <mass value="0"/>
@@ -29,9 +29,9 @@
     </link>
 
     <!-- Joint base_frame to chassis-->
-    <joint name="joint_chassis_base_frame" type="fixed">
+    <joint name="joint_chassis_base_footprint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 -0.15" />
-        <child link="base_frame" />
+        <child link="base_footprint" />
         <parent link="base_link" />
         <axis rpy="0 0 0" xyz="0 0 0" />
         <limit effort="10000" velocity="1000" />
@@ -232,6 +232,43 @@
         </visual>
     </link>
 
+    <!-- Gazebo tags - Laser scan -->
+    <gazebo reference="joint_chassis_front_laser">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+    <gazebo reference="front_laser">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <!-- Laser scan -->
+    <joint name="joint_chassis_front_laser" type="fixed">
+        <origin rpy="3.14159 0 0" xyz="0.25 0 0.075" />
+        <child link="front_laser" />
+        <parent link="base_link" />
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>
+    <link name="front_laser">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.5" />
+            <inertia ixx="0.000252666666667" ixy="0" ixz="0" iyy="0.000252666666667" iyz="0" izz="0.0005"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.025" length="0.02"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="0.7 0.1 0.1 .5" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.025" length="0.02"/>
+            </geometry>
+        </collision>
+    </link>
 </robot>
 
 
