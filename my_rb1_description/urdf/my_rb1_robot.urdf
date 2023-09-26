@@ -8,7 +8,7 @@
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0"/>
             <mass value="0"/>
-            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+            <inertia ixx=".0578125" ixy="0" ixz="0" iyy=".0578125" iyz="0" izz="1.5625"/>
         </inertial>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -38,12 +38,12 @@
         <joint_properties damping="0" friction="0" />
     </joint>        
 
-    <!-- Link - chassis -->
+    <!-- Link - chassis or base_link -->
     <link name="base_link">
         <inertial>
             <origin xyz="0 0 .3" rpy="0 0 0"/>
             <mass value="25"/>
-            <inertia ixx=".0578125" ixy="0" ixz="0" iyy=".0587125" iyz="0" izz="0.78125"/>
+            <inertia ixx=".0578125" ixy="0" ixz="0" iyy=".0578125" iyz="0" izz="1.5625"/>
         </inertial>
         <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -68,7 +68,7 @@
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <mass value="1"/>
-            <inertia ixx=".25" ixy="0" ixz="0" iyy="0.25" iyz="0" izz=".5"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0.0008" iyz="0" izz="0"/>
         </inertial>
 
         <collision>
@@ -101,7 +101,7 @@
         <inertial>
             <origin rpy="0 0 0" xyz="0 0 0" />
             <mass value="1"/>
-            <inertia ixx=".25" ixy="0" ixz="0" iyy="0.25" iyz="0" izz=".5"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0.0008" iyz="0" izz="0"/>
         </inertial>
 
         <collision>
@@ -144,7 +144,7 @@
         <inertial>
             <mass value="1" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.002526666666667" ixy="0" ixz="0" iyy="0.002526666666667" iyz="0" izz="0.005"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
         </inertial>
 
         <!-- front caster wheel support -->
@@ -194,7 +194,7 @@
         <inertial>
             <mass value="1" />
             <origin xyz="0 0 0" rpy="0 0 0" />
-            <inertia ixx="0.002526666666667" ixy="0" ixz="0" iyy="0.002526666666667" iyz="0" izz="0.005"/>
+            <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
         </inertial>
 
         <!-- front caster wheel support -->
@@ -251,7 +251,7 @@
         <inertial>
             <origin xyz="0 0 0" rpy="0 0 0" />
             <mass value="0.5" />
-            <inertia ixx="0.000252666666667" ixy="0" ixz="0" iyy="0.000252666666667" iyz="0" izz="0.0005"/>
+            <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
         </inertial>
         <visual>
             <origin xyz="0 0 0" rpy="0 0 0" />

@@ -204,3 +204,80 @@
     <!-- Joint - chassis/front_laser -->
     <joint name="joint_chassis_front_laser" type="fixed"/>
 </robot>
+
+
+
+
+<!-- just a place holder for code to be tested-->
+<!-- Link-front_laser -->
+    <link name="front_laser">
+        <collision>
+            <origin xyz=".25 0 .075" rpy="180/3.14159 0 0"/>
+            <geometry>
+                <sphere radius=".001"/>
+            </geometry>
+        </collison>
+
+        <visual>
+            <origin=".25 0 .075" rpy="180/3.14159 0 0"/>
+            <geometry>
+                <sphere radius=".001"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="1 0 0 1"/>
+            </material>
+        </visual>
+        <inertial>
+            <mass value="1" />
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <inertia ixx="0.002526666666667" ixy="0" ixz="0" iyy="0.002526666666667" iyz="0" izz="0.005"/>
+        </inertial>
+    </link>
+
+    <!-- Joint-chassis_front_laser -->
+    <joint name="joint_chassis_front_laser" type="fixed">
+        <origin rpy="3.14159 0 0" xyz=".25 0 .75" />
+        <child link="front_laser" />
+        <parent link="base_link" />
+        <joint_properties damping="1.0" friction="0" />  
+    </joint>
+
+
+    <!-- place holder for part 3 laser coding-->
+    <!-- Gazebo tags - Laser scan -->
+    <gazebo reference="joint_chassis_front_laser">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+    <gazebo reference="front_laser">
+        <material>Gazebo/DarkGrey</material>
+    </gazebo>
+
+    <!-- Laser scan -->
+    <joint name="joint_chassis_front_laser" type="fixed">
+        <origin rpy="3.14159 0 0" xyz="0.25 0 0.075" />
+        <child link="front_laser" />
+        <parent link="base_link" />
+        <joint_properties damping="1.0" friction="1.0" />
+    </joint>
+    <link name="front_laser">
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <mass value="0.5" />
+            <inertia ixx="0.000252666666667" ixy="0" ixz="0" iyy="0.000252666666667" iyz="0" izz="0.0005"/>
+        </inertial>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <cylinder radius="0.15" length="0.20"/>
+            </geometry>
+            <material name="Red">
+                <color rgba="0.7 0.1 0.1 1" />
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.15" length="0.20"/>
+            </geometry>
+        </collision>
+    </link>
