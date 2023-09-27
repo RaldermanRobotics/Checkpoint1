@@ -4,20 +4,36 @@
 <robot name="my_rb1_robot">
 
     <gazebo reference="base_link">
-        <material>Gazebo/Black</material>
+        <material>Gazebo/Black</material>       
     </gazebo>
     <gazebo reference="front_caster">
         <material>Gazebo/Orange</material>
+        <mu1>0</mu1>
+        <mu2>0</mu2>
     </gazebo>
     <gazebo reference="back_caster">
         <material>Gazebo/Orange</material>
+        <mu1>0</mu1>
+        <mu2>0</mu2>         
     </gazebo>
     <gazebo reference="left_wheel">
         <material>Gazebo/Blue</material>
+        <mu1>1</mu1>
+        <mu2>1</mu2>
     </gazebo>
     <gazebo reference="right_wheel">
         <material>Gazebo/Blue</material>
+        <mu1>1</mu1>
+        <mu2>1</mu2>        
     </gazebo>
+    <gazebo reference="joint_chassis_front_caster">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>    
+        <gazebo reference="joint_chassis_back_caster">
+        <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+
+
 
     <!-- Link - base_frame-->
     <link name="base_footprint">
@@ -44,7 +60,7 @@
         </visual>
     </link>
 
-    <!-- Joint base_frame to chassis-->
+    <!-- Joint base_frame to base footprint-->
     <joint name="joint_chassis_base_footprint" type="fixed">
         <origin rpy="0 0 0" xyz="0 0 -0.15" />
         <child link="base_footprint" />
@@ -205,7 +221,7 @@
         <parent link="base_link" />
         <joint_properties damping="1.0" friction="0" />
     </joint>
-    <!-- Link -front caster wheel -->
+    <!-- Link -back caster wheel -->
     <link name="back_caster">
         <inertial>
             <mass value="1" />
@@ -213,7 +229,7 @@
             <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
         </inertial>
 
-        <!-- front caster wheel support -->
+        <!-- back caster wheel support -->
         <collision>
             <origin rpy="0 0 0" xyz="0 0 0.03" />
             <geometry>
@@ -285,6 +301,55 @@
             </geometry>
         </collision>
     </link>
+
+    <!-- gazebo plugin for diff drive controller-->
+    <gazebo>
+        <plugin filename="libgazebo_ros_diff_drive.so" name="differential_drive_controller">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <leftJoint>joint_chassis_left_wheel</leftJoint>
+            <rightJoint>joint_chassis_right_wheel</rightJoint>
+            <wheelSeparation>0.45</wheelSeparation>
+            <wheelDiameter>0.05</wheelDiameter>
+            <torque>2</torque>
+            <commandTopic>cmd_vel</commandTopic>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom</odometryFrame>
+            <robotBaseFrame>base_link</robotBaseFrame>
+        </plugin>
+    </gazebo>
+    <!-- laser for scanning-->
+    <gazebo reference="front_laser">
+        <sensor type="ray" name="head_hokuyo_sensor">
+            <pose>0 0 0 0 0 0</pose>
+            <visualize>true</visualize>
+            <update_rate>20</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                        <samples>720</samples>
+                        <resolution>1</resolution>
+                        <min_angle>-1.570796</min_angle>
+                        <max_angle>1.570796</max_angle>
+                    </horizontal>
+                </scan>
+                <range>
+                    <min>0.20</min>
+                    <max>10.0</max>
+                    <resolution>0.01</resolution>
+                </range>
+                <noise>
+                    <type>gaussian</type>
+                    <mean>0.0</mean>
+                    <stddev>0.01</stddev>
+                </noise>
+            </ray>
+            <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
+                <topicName>/scan</topicName>
+                <frameName>sensor_laser</frameName>
+            </plugin>
+        </sensor>
+    </gazebo>
 </robot>
 
 
