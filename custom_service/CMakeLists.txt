@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(my_rb1_ros)
+project(custom_service)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -10,14 +10,15 @@ project(my_rb1_ros)
 find_package(catkin REQUIRED COMPONENTS
   actionlib
   geometry_msgs
-  roscpp
-  std_msgs
   nav_msgs
+  roscpp
+  std_srvs
   message_generation
 )
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
+
 
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
@@ -49,15 +50,17 @@ find_package(catkin REQUIRED COMPONENTS
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
- #add_message_files(
-  # FILES
-  # custom_service_messages.srv
- #)
+# add_message_files(
+#   FILES
+#   Message1.msg
+#   Message2.msg
+# )
 
 ## Generate services in the 'srv' folder
  add_service_files(
    FILES
-   custom_service_messages.srv
+	service_message.srv
+#   Service2.srv
  )
 
 ## Generate actions in the 'action' folder
@@ -68,12 +71,11 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
-  geometry_msgs
-  std_msgs
-  nav_msgs
-)
+ generate_messages(
+   DEPENDENCIES
+   geometry_msgs   nav_msgs
+   std_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -105,10 +107,10 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  #INCLUDE_DIRS include
-  #LIBRARIES practice_ck2
-  CATKIN_DEPENDS actionlib geometry_msgs roscpp std_msgs nav_msgs
-  #DEPENDS system_lib
+#  INCLUDE_DIRS include
+#  LIBRARIES custom_service
+  CATKIN_DEPENDS actionlib geometry_msgs nav_msgs roscpp std_srvs
+#  DEPENDS system_lib
 )
 
 ###########
@@ -124,7 +126,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/practice_ck2.cpp
+#   src/${PROJECT_NAME}/custom_service.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -135,7 +137,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/practice_ck2_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/custom_service_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -151,10 +153,6 @@ include_directories(
 # target_link_libraries(${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
 # )
-
-add_executable(rotate_service src/rotate_service.cpp)
-add_dependencies(rotate_service ${rotate_service_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(rotate_service ${catkin_LIBRARIES})
 
 #############
 ## Install ##
@@ -203,12 +201,10 @@ target_link_libraries(rotate_service ${catkin_LIBRARIES})
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_practice_ck2.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_custom_service.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
-
-
