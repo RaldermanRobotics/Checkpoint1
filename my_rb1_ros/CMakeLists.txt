@@ -107,7 +107,7 @@ generate_messages(
 catkin_package(
   #INCLUDE_DIRS include
   #LIBRARIES practice_ck2
-  CATKIN_DEPENDS actionlib geometry_msgs roscpp std_msgs nav_msgs
+  CATKIN_DEPENDS actionlib geometry_msgs roscpp std_msgs nav_msgs message_runtime
   #DEPENDS system_lib
 )
 

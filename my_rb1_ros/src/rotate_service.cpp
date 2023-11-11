@@ -1,65 +1,104 @@
-#include "geometry_msgs/Twist.h"
-#include "ros/ros.h"
-#include "std_srvs/Empty.h"
-#include "nav_msgs/Odometry.h"
+//#include <iterator>
+#include <my_rb1_ros/custom_service_messages.h>
+//#include <ros/ros.h>
+//#include <geometry_msgs/Twist.h>
+//#include <nav_msgs/Odometry.h>
+//#include <tf/transform_datatypes.h>
 
-class Rotate {
+#include <ros/ros.h>
+#include <tf/transform_datatypes.h>
+#include <nav_msgs/Odometry.h>
+#include <geometry_msgs/Twist.h>
+#include <math.h>
+//#include "pkg_name/srv_custom_file.h"
 
-  ros::NodeHandle node;
-  
-  // std::string action_name_;
-  
-  // still need to figure out the custom message
-  bool simplecallback(std_srvs::Empty::Request &req,
-                      std_srvs::Empty::Response &res) {
-    req.degrees = req.degrees * 3.14 / 180;
-    ROS_INFO("You have choosen to rotate the robot");
+//now define the private variables I plan to use
+double roll, pitch, yaw;
+double degree_input;
+double input_radian_convert;
+double kP = 0.05; //Proportional gain
+ros::Publisher pub;
+ros::ServiceServer srv_rotate_by_degrees;
+ros::Subscriber sub;
+bool reached_target = false;
+
+//(const nav_msgs::Odometry::custom_service::Requestg& req, pkg_name::custom_service::Response& res)
+
+void getRotation(const nav_msgs::Odometry::ConstPtr& msg)
+{
+    geometry_msgs::Quaternion orientation = msg->pose.pose.orientation;
+    tf::Quaternion tf_orientation;
+    tf::quaternionMsgToTF(orientation, tf_orientation);
+    tf::Matrix3x3(tf_orientation).getRPY(roll, pitch, yaw);
+    ROS_INFO("Yaw = %.2f", yaw);
+
+    if (!reached_target && std::abs(input_radian_convert - yaw) < 0.1)
+    {
+        geometry_msgs::Twist stop;
+        stop.angular.z = 0.0;
+        pub.publish(stop);
+        reached_target = true;
+    }
+}   
+
+bool rotate_with_degrees(my_rb1_ros::custom_service_messages::Request& req, my_rb1_ros::custom_service_messages::Response& res)
+{
+    ROS_INFO("Rotation Callback has been called");
+    reached_target = false;
+    //double check_value_left;
+    //double check_value_right;
+    input_radian_convert = req.degrees * M_PI / 180;
+    
+    geometry_msgs::Twist turn1;
+    turn1.angular.z = kP * (input_radian_convert - yaw);
+    pub.publish(turn1);
+    res.success = true;
+    
     return true;
-  }
 
-  int nav;
-  // even with the include this does not seem to recognize
-  // nav_msgs::Odometry.... will need to troubleshoot.
-  void odomCb(const odom::nav_msgs::ConstPrt &msg, int) {
-    int orient_z_initial = msg->pose.pose.orientation.z;
-    int angular_z_initial = msg->twist.twist.angular.z;
-  }
 
-  ros::ServiceServer rotate_server =
-      node.advertiseService("/rotate_server", simplecallback);
-  ros::Subscriber odompull = node.subscribe("/odom", 1, odomCb);
-  ros::Publisher rotate_pub =
-      node.advertise<geometry_msgs::Twist>("cmd_vel", 1000);
+    //while (req.degrees >= 0 && yaw <= input_radian_convert) //turn left
+    //{
+    //    ROS_INFO("the input is telling the robot to turn left");
+    //    check_value_left = input_radian_convert - yaw;
 
-  int counter = 0
+    //    while ((ros::ok()) && abs(check_value_left) > 0.1)
+    //    {
+    //    turn1.angular.z = input_radian_convert - yaw;
+    //    pub.publish(turn1);
+    //    }
+    //}
 
-                if counter < 4 {
-    //  ros::Rate loop_rate(.25); don't think it need to be here... likely to
-    //  remove
+    //while (req.degrees < 0 && yaw >= input_radian_convert) //turn right
+    //{
+        
+    //    ROS_INFO("the input is telling the robot to turn right");
+    //    check_value_right = input_radian_convert - yaw;
 
-    geometry_msgs::Twist angular_accel;
-    angular_accel.angular.z =
-        (req.degrees - orient_z_initial - (angular_z_initial * 4)) / 16;
-    // us angular moment equation at t = 4
-    ros::Time beginTime = ros::Time::now();
-    ros::Duration secondsIWantToSendMessagesFor = ros::Duration(4);
-    ros::Time endTime = beginTime + secondsIWantToSendMessagesFor;
-  }
+    //    while((ros::ok()) && abs(check_value_right) > .01)
+    //    {
+    //    turn1.angular.z = input_radian_convert - yaw;
+    //    pub.publish(turn1);
+    //    ros.sleep()
+    //    }
+//    }
+    
+//    ROS_INFO("Finished the turn");
+//   turn1.angular.z = 0;
+//    pub.publish(turn1);
+//    return true;
+}
 
-  while (ros::Time::now() < endTime) {
-    rotate_pub.publish(angular_accel);
 
-    // Time between messages, so you don't blast out an thousands of
-    // messages in your 3 secondperiod
-    ros::Duration(0.1).sleep();
-  };
-};
+int main(int argc, char** argv)
+{
+    ros::init(argc, argv, "rotate_this_thing");
+    ros::NodeHandle nh;
 
-int main(int argc, char **argv) {
-  ros::init(argc, argv, "rotate_node");
-
-  Rotate your_choice("rotate_robot_ss");
-  ros::spin();
-
-  return 0;
+    sub = nh.subscribe("/odom", 1 ,getRotation); 
+    pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
+    srv_rotate_by_degrees = nh.advertiseService("/rotate_by_degree", rotate_with_degrees);
+    ros::spin();
+    
+    return 0;  
 }

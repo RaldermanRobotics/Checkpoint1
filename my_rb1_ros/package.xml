@@ -70,8 +70,8 @@
   <build_export_depend>message_runtime</build_export_depend>
   <exec_depend>message_runtime</exec_depend>
 
-  <build_depend>customservicem</build_depend>
-  <exec_depend>customservicem</exec_depend>
+  <build_depend>custom_service_messages</build_depend>
+  <exec_depend>custom_service_messages</exec_depend>
 
 
 
