@@ -1,5 +1,5 @@
 //#include <iterator>
-#include <my_rb1_ros/custom_service_messages.h>
+#include <my_rb1_ros/Rotate.h>
 //#include <ros/ros.h>
 //#include <geometry_msgs/Twist.h>
 //#include <nav_msgs/Odometry.h>
@@ -16,7 +16,7 @@
 double roll, pitch, yaw;
 double degree_input;
 double input_radian_convert;
-double kP = 0.05; //Proportional gain
+double kP = 0.10; //Proportional gain
 ros::Publisher pub;
 ros::ServiceServer srv_rotate_by_degrees;
 ros::Subscriber sub;
@@ -37,11 +37,11 @@ void getRotation(const nav_msgs::Odometry::ConstPtr& msg)
         geometry_msgs::Twist stop;
         stop.angular.z = 0.0;
         pub.publish(stop);
-        reached_target = true;
+        reached_target = true;   
     }
 }   
 
-bool rotate_with_degrees(my_rb1_ros::custom_service_messages::Request& req, my_rb1_ros::custom_service_messages::Response& res)
+bool rotate_with_degrees(my_rb1_ros::Rotate::Request& req, my_rb1_ros::Rotate::Response& res)
 {
     ROS_INFO("Rotation Callback has been called");
     reached_target = false;
@@ -52,7 +52,8 @@ bool rotate_with_degrees(my_rb1_ros::custom_service_messages::Request& req, my_r
     geometry_msgs::Twist turn1;
     turn1.angular.z = kP * (input_radian_convert - yaw);
     pub.publish(turn1);
-    res.success = true;
+    res.result = "The Robot is turning to the desired orientation";
+    
     
     return true;
 
@@ -97,7 +98,7 @@ int main(int argc, char** argv)
 
     sub = nh.subscribe("/odom", 1 ,getRotation); 
     pub = nh.advertise<geometry_msgs::Twist>("/cmd_vel", 1);
-    srv_rotate_by_degrees = nh.advertiseService("/rotate_by_degree", rotate_with_degrees);
+    srv_rotate_by_degrees = nh.advertiseService("/rotate_robot", rotate_with_degrees);
     ros::spin();
     
     return 0;  
